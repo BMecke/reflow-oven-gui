@@ -13,6 +13,11 @@ function setTargetTempInChart(temperaturePoints){
     if(temperaturePoints.at(-1)[0] > chartLength){
         setChartLength(temperaturePoints.at(-1)[0]);
     }
+    // add a Point (0, 0), if the target temperature chart doesn't start at time 0s.
+    if(temperaturePoints[0][0] != 0){
+        temperaturePoints = [[0, 0]].concat(temperaturePoints);
+        console.log(temperaturePoints)
+    }
     chart.data.datasets[0].data = temperaturePoints;
     chart.update();
 }

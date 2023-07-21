@@ -3,8 +3,8 @@ from threading import Thread
 import logging
 
 logger = logging.getLogger('Device')
-logging.basicConfig(format='%(levelname)s - %(name)s | %(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S', level=logging.INFO)
-
+logging.basicConfig(format='%(levelname)s - %(name)s | %(asctime)s - %(message)s',
+                    datefmt='%d-%b-%y %H:%M:%S', level=logging.INFO)
 
 class Device:
     """
@@ -114,7 +114,6 @@ class Device:
         """
         self.running = False
         self.run_out = True
-        self.stop_device()
 
     def stop_device(self):
         """
@@ -153,6 +152,7 @@ class Device:
                 self.run_out = False
                 self.running = False
                 follow_up_time = self.follow_up_time
+                self.stop_device()
 
             if self.runtime >= self.profile.duration and self.running:
                 self.running = False
@@ -179,15 +179,15 @@ class Device:
         """
         self.profile = profile
 
-    def set_profile_on_device(self, data_points):
+    def set_profile_on_device(self, profile):
         """
         Here the profile is transferred to the currently selected soldering device.
         This function must be implemented in the subclass of the device.
 
         Parameters
         ----------
-        data_points: list
-            The data points to be set.
+        profile: list
+            The profile to be set.
         """
         raise NotImplementedError
 

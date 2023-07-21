@@ -1,9 +1,13 @@
+import logging
 import time
 import random
 
 from Device import Device
 from Profile import Profile
 
+logger = logging.getLogger('Simulator')
+logging.basicConfig(format='%(levelname)s - %(name)s | %(asctime)s - %(message)s',
+                    datefmt='%d-%b-%y %H:%M:%S', level=logging.INFO)
 
 class Simulator(Device):
     """
@@ -62,13 +66,13 @@ class Simulator(Device):
         """
         Since this is a simulator, nothing needs to be done here.
         """
-        pass
+        logger.info('stop_device()')
 
     def start_device(self):
         """
         Since this is a simulator, nothing needs to be done here.
         """
-        pass
+        logger.info('start_device()')
 
     def get_temperature(self):
         """
@@ -95,14 +99,14 @@ class Simulator(Device):
             else:
                 return self.room_temperature
 
-    def set_profile_on_device(self, data_points):
+    def set_profile_on_device(self, profile):
         """
         Here the profile is transferred to the currently selected soldering device.
         Since this is a simulator, nothing needs to be done here.
 
         Parameters
         ----------
-        data_points: list
-            The data points to be set.
+        profile: list
+            The profile to be set.
         """
-        pass
+        logger.info(f'set_profile_on_device() : {profile.id}')
