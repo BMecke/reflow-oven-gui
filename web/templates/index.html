@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Reflow Oven</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <!-- <meta http-equiv="refresh" content="5">  Reload page every 5 seconds -->
+  </head>
+  <body>
+
+  <table class="header_table">
+    <thead>
+        <tr>
+            <th>Profile</th>
+            <th>Devices</th>
+            <th>Sensor Temp</th>
+            <th>Target Temp</th>
+            <th>Time</th>
+            <th>Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="active-row">
+            <td>
+                <div class="dropdown">
+                  <button class="dropbtn">Profile</button>
+                  <div class="dropdown-content" id="profile_list">
+                    <!-- Profiles -->
+                  </div>
+                </div>
+            </td>
+            <td>
+                <div class="dropdown">
+                  <button class="dropbtn">Device</button>
+                  <div class="dropdown-content" id="device_list">
+                    <!-- Ports -->
+                  </div>
+                </div>
+            </td>
+            <!-- Reflow data listed in header -->
+            <td id="sensor_temp"></td>
+            <td id="target_temp"></td>
+            <td id="time"></td>
+            <td><button class="start_stop_button" id="start_stop"></button></td>
+        </tr>
+    </tbody>
+  </table>
+
+  <div style="width: 70% !important; margin-left: auto; margin-right: auto; height: 900px !important;">
+  <canvas id="reflow_chart"></canvas>
+  </div>
+
+  </body>
+<script src="/static/js/helper_functions.js" charset="utf-8"></script>
+<script src="/static/js/update_functions.js" charset="utf-8"></script>
+<script src="/static/js/post_functions.js" charset="utf-8"></script>
+<script src="/static/js/chart.js" charset="utf-8"></script>
+<script src="/static/js/init_functions.js" charset="utf-8"></script>
+</html>
