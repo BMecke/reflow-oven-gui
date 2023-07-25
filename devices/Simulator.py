@@ -24,8 +24,6 @@ class Simulator(Device):
         The ID of the simulator object. This is incremented with each object created.
     name: str
         The Name of the device.
-    profile: SimProfile()
-        The soldering profiles are managed here.
     room_temperature: float
         The simulated room-temperature
     temperature: float
@@ -74,6 +72,12 @@ class Simulator(Device):
         """
         logger.info('start_device()')
 
+    def device_finished(self):
+        """
+        Since this is a simulator, nothing needs to be done here.
+        """
+        logger.info('device_finished()')
+
     def get_temperature(self):
         """
         Here the temperature of the currently selected simulator device is measured.
@@ -89,7 +93,7 @@ class Simulator(Device):
         if self.running:
             if target_temp > self.temperature:
                 return self.temperature + random.randint(5, 6)
-            elif self.temperature > target_temp and self.temperature > self.room_temperature + 2:
+            elif self.temperature >= target_temp and self.temperature > self.room_temperature + 2:
                 return self.temperature - random.randint(1, 2)
             else:
                 return self.room_temperature

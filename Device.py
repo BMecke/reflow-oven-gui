@@ -48,6 +48,9 @@ class Device:
         Stop the soldering process.
     stop_device()
         Here the soldering process on the currently selected soldering device is stopped.
+    device_finished()
+        This function is called on the device when the soldering process is finished and the follow up time is zero.
+
     run()
         The run function of the threading class.
     get_temperature()
@@ -66,13 +69,14 @@ class Device:
         self.temperature = 0
         self.profile = profile
         self.running = False
-        self.follow_up_time = 30
+        self.follow_up_time = 180
         self.run_out = False
         self.selected = False
         self.target_temperature = 0
         # Runtime in seconds
         self.runtime = 0
         self.measured_points = []
+        self._thread_should_run = True
 
     def reset(self):
         """
@@ -95,10 +99,10 @@ class Device:
         In this function the function "start_device()" is called, which must be implemented in the child classes
         """
         self.measured_points = []
-        self._start_time = time.time()
         self.running = True
         self.run_out = False
         self.start_device()
+        self._start_time = time.time()
 
     def start_device(self):
         """
@@ -114,10 +118,18 @@ class Device:
         """
         self.running = False
         self.run_out = True
+        self.stop_device()
 
     def stop_device(self):
         """
         Here the soldering process on the currently selected soldering device is stopped.
+        Therefore, it must be adapted to the device and implemented new in each device class.
+        """
+        raise NotImplementedError
+
+    def device_finished(self):
+        """
+        This function is called on the device when the soldering process is finished and the follow up time is zero.
         Therefore, it must be adapted to the device and implemented new in each device class.
         """
         raise NotImplementedError
@@ -134,7 +146,7 @@ class Device:
         time_stamp = 0
         last_time_stamp = 0
         last_temperature = 0
-        while True:
+        while self._thread_should_run:
             self.temperature = self.get_temperature()
             if self.running or self.run_out:
                 time_stamp = time.time()
@@ -152,7 +164,7 @@ class Device:
                 self.run_out = False
                 self.running = False
                 follow_up_time = self.follow_up_time
-                self.stop_device()
+                self.device_finished()
 
             if self.runtime >= self.profile.duration and self.running:
                 self.running = False

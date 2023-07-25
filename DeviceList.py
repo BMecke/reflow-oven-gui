@@ -1,4 +1,5 @@
 from devices.Simulator import Simulator
+from devices.V3_Pro import V3Pro
 
 
 class DeviceList:
@@ -18,7 +19,7 @@ class DeviceList:
             Name, ID and selection status of the currently selected device.
        """
     def __init__(self, profiles):
-        self.device_list = [Simulator(profiles.selected_profile)]
+        self.device_list = [Simulator(profiles.selected_profile), Simulator(profiles.selected_profile)]
         self.device_list[0].selected = True
 
     @property

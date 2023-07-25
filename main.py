@@ -106,6 +106,8 @@ def update_selected_device():
     if content_type == 'application/json':
         json_data = request.get_json()
         device_list.selected_device = json_data['id']
+        device_list.selected_device.update_profile(profiles.selected_profile)
+        device_list.selected_device.set_profile_on_device(profiles.selected_profile)
 
         return json.dumps({'received': True, 'error': None})
     else:

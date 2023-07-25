@@ -5,6 +5,7 @@ logger = logging.getLogger('Profile')
 logging.basicConfig(format='%(levelname)s - %(name)s | %(asctime)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S', level=logging.INFO)
 
+
 class Profile:
     """
     In this class the different soldering profiles are managed.
@@ -85,7 +86,7 @@ class Profile:
             else:
                 return round(float(prev_point[1]), 2)
         except TypeError:
-            logger.warning('A too high temperature is requested')
+            # logger.warning('A too high temperature is requested')
             return round(float(self.data[-1][1]), 2)
 
     def _get_surrounding_points(self, second):
