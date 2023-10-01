@@ -47,6 +47,31 @@
     </tbody>
   </table>
 
+  <!-- The Modal -->
+  <div id="profile_modal" class="modal">
+
+    <!-- Modal content -->
+    <div id="modal_content" class="modal-content">
+      <span class="close">&times;</span>
+      <h3>New Profile</h3>
+      <table id="new_profile">
+        <thead>
+          <tr>
+              <th>Point</th>
+              <th>Time</th>
+              <th>Temperature</th>
+              <th>Power</th>
+          </tr>
+        </thead>
+        <tbody id="profile_points">
+        </tbody>
+      </table>
+      <button class="start_stop_button" id="add">Add Point</button>
+      <button text-align: center; class="start_stop_button" id="save">Save</button>
+   </div>
+
+  </div>
+
   <div style="width: 70% !important; margin-left: auto; margin-right: auto; height: 900px !important;">
   <canvas id="reflow_chart"></canvas>
   </div>

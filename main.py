@@ -155,6 +155,30 @@ def update_selected_profile():
         return json.dumps({'received': True, 'error': None})
     else:
         return json.dumps({'received': False, 'error': 'Content-Type not supported!'})
+    
+
+@app.route("/new_profile", methods=['POST'])
+def new_profile():
+    """
+    This function is called on an HTTP POST to "/new_profile".
+    This function is called from the frontend to add a new profile.
+    The profile to add is passed to the function from the frontend.
+
+    The return corresponds to the HTTP response.
+
+    Returns
+    -------
+        str
+            A json string indicating whether all data was received correctly.
+    """
+    content_type = request.headers.get('Content-Type')
+    if content_type == 'application/json':
+        json_data = request.get_json()
+        profiles.add_profile(json_data['id'], json_data['name'], json_data['data'])
+
+        return json.dumps({'received': True, 'error': None})
+    else:
+        return json.dumps({'received': False, 'error': 'Content-Type not supported!'})    
 
 
 @app.route("/update_start_stop", methods=['POST'])

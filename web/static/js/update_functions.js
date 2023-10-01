@@ -52,9 +52,91 @@ async function updateProfileList(){
         link.setAttribute("onclick", "postProfile(" + i + ")");
         div.appendChild(link);
     }
+    let link = document.createElement("a");
+    link.textContent = "New Profile";
+    link.href = "javascript:void(0);";
+    link.setAttribute("onclick", "popUp(" + (profiles.length + 1) + ")");
+    div.appendChild(link);
 }
 
-// chart functions
+/**
+ * Modal functions
+ */
+function popUp(index){
+    let modal = document.getElementById("profile_modal");
+    modal.style.display = "block";
+
+    let addBtn = document.getElementById('add');
+    addBtn.setAttribute("onclick", "addRow()");
+
+    let saveBtn = document.getElementById('save');
+    saveBtn.setAttribute("onclick", "save(" + index + ")");
+
+    let span = document.getElementsByClassName("close")[0];
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+}
+
+// function to add a row for a new point
+function addRow(){
+    let table = document.getElementById('profile_points');
+    let row = table.insertRow();
+    for(let i = 0; i < 5; ++i){
+        let data = row.insertCell(i);
+        if(i == 0){
+            data.textContent = row.rowIndex;
+        } else 
+        if(i == 4){
+            let btn = document.createElement("BUTTON")
+            data.appendChild(btn);
+            btn.setAttribute("onclick", "deleteRow(" + row.rowIndex + ")");
+            btn.innerText = "Delete"
+        }
+        else{
+            let input = document.createElement("INPUT");
+            input.setAttribute("type", "number");
+            input.setAttribute("max", "300");
+            input.setAttribute("min", "0");
+            data.appendChild(input);
+        }
+    }
+}
+
+// function to delete a point and its data values in the row
+function deleteRow(index){
+    let table = document.getElementById('profile_points')
+    table.deleteRow(index - 1);
+    for (let i = index-1; i < table.rows.length; ++i) {
+        table.rows[i].cells[0].textContent = i+1;
+        table.rows[i].cells[4].firstChild.setAttribute("onclick", "deleteRow(" + (i+1) + ")");
+    }
+}
+
+// function to save the points as a profile
+function save(profile){
+    let table = document.getElementById('profile_points')
+
+    let id = "p" + profile;
+    let name = "Profile " + profile;
+    let data = [];
+    for (let i = 0; i < table.rows.length; ++i) {
+        data[i] = [table.rows[i].cells[1].firstChild.valueAsNumber,
+                    table.rows[i].cells[2].firstChild.valueAsNumber,
+                    table.rows[i].cells[3].firstChild.valueAsNumber];
+    }
+    postNewProfile(id, name, data);
+
+    let modal = document.getElementById("profile_modal");
+    modal.style.display = "none";
+
+    updateProfileList();
+}
+
+
+/**
+ * Chart functions
+ */
 async function updateTargetTempPoints(){
     let points = await getData("/target_temp_points");
     setTargetTempInChart(points);

@@ -34,7 +34,7 @@ class Profile:
         self.name = name
         self.data = data
         self.selected = False
-        self.duration = float(max([t for (t, y) in self.data]))
+        self.duration = float(max([t for (t, y, p) in self.data]))
 
     @property
     def data(self):

@@ -25,3 +25,8 @@ function postProfile(profileIndex){
     clearMeasuredTempInChart();
     chartLength = 0;
 }
+
+function postNewProfile(id, name, data){
+    postJSON("/new_profile", {id, name, data});
+    //console.log(JSON.stringify({id, name, data}));
+}
