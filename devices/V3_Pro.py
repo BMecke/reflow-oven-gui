@@ -115,17 +115,19 @@ class V3Pro(Device):
                 logger.warning('More than 4 data points were transferred. Only the first 4 points are used.')
             self._v3_pro_serial_connection.preheat_time = profile.data[0][0]
             self._v3_pro_serial_connection.preheat_temp = profile.data[0][1]
-            print(profile.data[0][0])
-            print(self._v3_pro_serial_connection.preheat_time)
+            self._v3_pro_serial_connection.preheat_pwr = profile.data[0][2]
 
             self._v3_pro_serial_connection.soak_time = profile.data[1][0] - profile.data[0][0]
             self._v3_pro_serial_connection.soak_temp = profile.data[1][1]
+            self._v3_pro_serial_connection.soak_pwr= profile.data[1][2]
 
             self._v3_pro_serial_connection.reflow_time = profile.data[2][0] - profile.data[1][0]
             self._v3_pro_serial_connection.reflow_temp = profile.data[2][1]
+            self._v3_pro_serial_connection.reflow_pwr = profile.data[2][2]
 
             self._v3_pro_serial_connection.dwell_time = profile.data[3][0] - profile.data[2][0]
             self._v3_pro_serial_connection.dwell_temp = profile.data[3][1]
+            self._v3_pro_serial_connection.dwell_pwr = profile.data[3][2]
             logger.info('Profile written to device')
 
 
