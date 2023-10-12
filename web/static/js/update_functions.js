@@ -50,6 +50,8 @@ async function updateProfileList(){
         link.textContent = profiles[i]['name'];
         link.href = "javascript:void(0);";
         link.setAttribute("onclick", "postProfile(" + i + ")");
+        if(profiles[i]['selected'])
+            link.style.color =  "#009374";
         div.appendChild(link);
     }
     let link = document.createElement("a");
@@ -76,6 +78,10 @@ function popUp(index){
     span.onclick = function() {
         modal.style.display = "none";
     }
+
+    let textField = document.getElementById("profile_name");
+    textField.setAttribute("placeholder", `Profile ${index}`);
+    textField.setAttribute("defaultValue", `Profile ${index}`);
 }
 
 // function to add a row for a new point
@@ -96,8 +102,21 @@ function addRow(){
         else{
             let input = document.createElement("INPUT");
             input.setAttribute("type", "number");
-            input.setAttribute("max", "300");
             input.setAttribute("min", "0");
+            switch (i) {
+                case 1:
+                    input.setAttribute("placeholder", `${row.rowIndex*30}` );
+                    input.setAttribute("max", "900");
+                    break;
+                case 2:
+                    input.setAttribute("placeholder", "25" );
+                    input.setAttribute("max", "250");
+                    break;
+                case 3:
+                    input.setAttribute("placeholder", "100" );
+                    input.setAttribute("max", "100");
+                    break;
+            }
             data.appendChild(input);
         }
     }
@@ -115,15 +134,16 @@ function deleteRow(index){
 
 // function to save the points as a profile
 function save(profile){
-    let table = document.getElementById('profile_points')
+    let table = document.getElementById('profile_points');
+    let textField = document.getElementById("profile_name");
 
     let id = "p" + profile;
-    let name = "Profile " + profile;
+    let name = textField.value != "" ? textField.value : textField.defaultValue;
     let data = [];
     for (let i = 0; i < table.rows.length; ++i) {
-        data[i] = [table.rows[i].cells[1].firstChild.valueAsNumber,
-                    table.rows[i].cells[2].firstChild.valueAsNumber,
-                    table.rows[i].cells[3].firstChild.valueAsNumber];
+        data[i] = [table.rows[i].cells[1].firstChild.valueAsNumber || 30*(i+1),
+                    table.rows[i].cells[2].firstChild.valueAsNumber || 25,
+                    table.rows[i].cells[3].firstChild.valueAsNumber || 100];
     }
     postNewProfile(id, name, data);
 
