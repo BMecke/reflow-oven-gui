@@ -14,11 +14,51 @@ logging.basicConfig(format='%(levelname)s - %(name)s | %(asctime)s - %(message)s
 
 
 def check_if_device_is_v3_pro_device(port):
-    test_dev = V3ProSerialConnection(port)
-    if test_dev.check_serial_connection():
-        return True
-    else:
-        return False
+    # TODO: Prettify entire function
+    # TODO: Add docstring
+    ser = serial.Serial(
+        port=port,
+        baudrate=9600,
+        parity=serial.PARITY_NONE,
+        stopbits=1,
+        bytesize=8,
+        timeout=0.5
+    )
+
+    # skip unnecessary lines
+    while True:
+        raw_line = ser.readline().decode().strip()
+        if len(raw_line) == 0:
+            break
+
+    for i in range(5):
+        try:
+
+            try:
+                ser.write(bytes(str('doStop') + '\r', 'utf-8'))
+            except AttributeError:
+                raise ConnectionError('Could not write command to reflow controller.')
+            response_lines = []
+            command_unsuccessful = False
+            while True:
+                raw_line = ser.readline().decode().strip()
+                # check if the controller returns an error (# Command >[...]< not found)
+                if 'not found' in raw_line or '# Command >' in raw_line:
+                    command_unsuccessful = True
+                if len(raw_line) == 0:
+                    break
+                response_lines.append(raw_line)
+            if command_unsuccessful:
+                raise ConnectionError('Could not write command to reflow controller.')
+
+            response = response_lines
+            for line in response:
+                if 'Stop' in line:
+                    return True
+        except (ConnectionError, ValueError):
+            pass
+
+    return False
 
 
 class V3Pro(Device):
@@ -119,7 +159,7 @@ class V3Pro(Device):
 
             self._v3_pro_serial_connection.soak_time = profile.data[1][0] - profile.data[0][0]
             self._v3_pro_serial_connection.soak_temp = profile.data[1][1]
-            self._v3_pro_serial_connection.soak_pwr= profile.data[1][2]
+            self._v3_pro_serial_connection.soak_pwr = profile.data[1][2]
 
             self._v3_pro_serial_connection.reflow_time = profile.data[2][0] - profile.data[1][0]
             self._v3_pro_serial_connection.reflow_temp = profile.data[2][1]

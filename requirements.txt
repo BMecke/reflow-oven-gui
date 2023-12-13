@@ -1,0 +1,5 @@
+Flask~=3.0.0
+serial~=0.0.97
+pyserial~=3.5
+pyudev~=0.24.1; sys_platform=='linux'
+wmi~=1.5.1; sys_platform=='win32'
