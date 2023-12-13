@@ -16,27 +16,25 @@ logging.basicConfig(format='%(levelname)s - %(name)s | %(asctime)s - %(message)s
 def check_if_device_is_v3_pro_device(port):
     # TODO: Prettify entire function
     # TODO: Add docstring
-    ser = serial.Serial(
-        port=port,
-        baudrate=9600,
-        parity=serial.PARITY_NONE,
-        stopbits=1,
-        bytesize=8,
-        timeout=0.5
-    )
+    try:
+        ser = serial.Serial(
+            port=port,
+            baudrate=9600,
+            parity=serial.PARITY_NONE,
+            stopbits=1,
+            bytesize=8,
+            timeout=0.5,
+            write_timeout=1.0
+        )
+    except (PermissionError, serial.serialutil.SerialException):
+        return False
 
-    # skip unnecessary lines
-    while True:
-        raw_line = ser.readline().decode().strip()
-        if len(raw_line) == 0:
-            break
-
-    for i in range(5):
+    for i in range(4):
         try:
 
             try:
                 ser.write(bytes(str('doStop') + '\r', 'utf-8'))
-            except AttributeError:
+            except (AttributeError, serial.serialutil.SerialTimeoutException):
                 raise ConnectionError('Could not write command to reflow controller.')
             response_lines = []
             command_unsuccessful = False
@@ -54,10 +52,14 @@ def check_if_device_is_v3_pro_device(port):
             response = response_lines
             for line in response:
                 if 'Stop' in line:
+                    port_closing_thread = threading.Thread(target=ser.close, daemon=True)
+                    port_closing_thread.start()
                     return True
         except (ConnectionError, ValueError):
             pass
 
+    port_closing_thread = threading.Thread(target=ser.close, daemon=True)
+    port_closing_thread.start()
     return False
 
 

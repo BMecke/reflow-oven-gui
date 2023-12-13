@@ -47,7 +47,6 @@ class DeviceList:
         """
         for port in port_list:
             if check_if_device_is_v3_pro_device(port):
-                print("True")
                 self._hardware_device_list.append({
                     'port': port,
                     'device': V3Pro(self._profiles.selected_profile, port)
