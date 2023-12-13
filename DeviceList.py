@@ -19,7 +19,7 @@ class DeviceList:
             Name, ID and selection status of the currently selected device.
        """
     def __init__(self, profiles):
-        self.device_list = [Simulator(profiles.selected_profile), Simulator(profiles.selected_profile)]
+        self.device_list = [Simulator(profiles.selected_profile)]#, V3Pro(profiles.selected_profile, '/dev/ttyUSB0')]
         self.device_list[0].selected = True
 
     @property
