@@ -13,7 +13,6 @@ import serial.tools.list_ports
 
 
 class USBDeviceDaemon:
-    # TODO: Test on Windows
     # TODO: Adjust docstring format according to project standard
     def __init__(self, plug_in_event, plug_out_event, init_complete):
         """
