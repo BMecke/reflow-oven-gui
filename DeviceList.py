@@ -1,5 +1,11 @@
+import threading
+
+import serial
+
+from USBDeviceDaemon import USBDeviceDaemon
+
 from devices.Simulator import Simulator
-from devices.V3_Pro import V3Pro
+from devices.V3_Pro import V3Pro, check_if_device_is_v3_pro_device
 
 
 class DeviceList:
@@ -19,8 +25,63 @@ class DeviceList:
             Name, ID and selection status of the currently selected device.
        """
     def __init__(self, profiles):
-        self.device_list = [Simulator(profiles.selected_profile)]#, V3Pro(profiles.selected_profile, '/dev/ttyUSB0')]
+        self._profiles = profiles
+
+        # initialize device list with a simulated device (and set it as the currently selected one)
+        self.device_list = [Simulator(self._profiles.selected_profile)]
         self.device_list[0].selected = True
+
+        # this list contains the currently connected and compatible serial devices (real hardware, no simulators)
+        # each element is a dict with a "port" and an actual "device" key
+        self._hardware_device_list = []
+
+        # instantiate USBDeviceDaemon and block until initialization is complete
+        self._is_device_list_initialized = threading.Event()
+        self._is_device_list_initialized.clear()
+        self._usb_daemon = USBDeviceDaemon(
+            self._on_added_devices, self._on_removed_devices, self._on_device_initialization
+        )
+        self._is_device_list_initialized.wait()
+
+    def _on_added_devices(self, port_list):
+        """
+        TODO: Add docstring
+        """
+        for port in port_list:
+
+            try:
+                ser = serial.Serial(port=port)
+            except (PermissionError, serial.serialutil.SerialException):
+                continue
+
+            if check_if_device_is_v3_pro_device(ser):
+                self._hardware_device_list.append({
+                    'port': port,
+                    'device': V3Pro(self._profiles.selected_profile, ser)
+                })
+            else:
+                ser_closing_thread = threading.Thread(target=ser.close, daemon=True)
+                ser_closing_thread.start()
+
+    def _on_removed_devices(self, port_list):
+        """
+        TODO: Add docstring
+        """
+        for port in port_list:
+            for device in self._hardware_device_list:
+                if port == device['port']:
+                    self._hardware_device_list.remove(device)
+                    break
+
+    def _on_device_initialization(self):
+        """
+        Adds all device entries from the pure hardware device list to the overall device list.
+
+        Unblocks the "__init__" method afterward.
+        """
+        for device in self._hardware_device_list:
+            self.device_list.append(device['device'])
+        self._is_device_list_initialized.set()
 
     @property
     def selected_device(self):
