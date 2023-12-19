@@ -1,5 +1,7 @@
 import threading
 
+import serial
+
 from USBDeviceDaemon import USBDeviceDaemon
 
 from devices.Simulator import Simulator
@@ -46,11 +48,20 @@ class DeviceList:
         TODO: Add docstring
         """
         for port in port_list:
-            if check_if_device_is_v3_pro_device(port):
+
+            try:
+                ser = serial.Serial(port=port)
+            except (PermissionError, serial.serialutil.SerialException):
+                continue
+
+            if check_if_device_is_v3_pro_device(ser):
                 self._hardware_device_list.append({
                     'port': port,
-                    'device': V3Pro(self._profiles.selected_profile, port)
+                    'device': V3Pro(self._profiles.selected_profile, ser)
                 })
+            else:
+                ser_closing_thread = threading.Thread(target=ser.close, daemon=True)
+                ser_closing_thread.start()
 
     def _on_removed_devices(self, port_list):
         """

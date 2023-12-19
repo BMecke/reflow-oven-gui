@@ -13,33 +13,27 @@ logging.basicConfig(format='%(levelname)s - %(name)s | %(asctime)s - %(message)s
                     datefmt='%d-%b-%y %H:%M:%S', level=logging.INFO)
 
 
-def check_if_device_is_v3_pro_device(port):
+def check_if_device_is_v3_pro_device(serial_connection):
     # TODO: Prettify entire function
     # TODO: Add docstring
-    try:
-        ser = serial.Serial(
-            port=port,
-            baudrate=9600,
-            parity=serial.PARITY_NONE,
-            stopbits=1,
-            bytesize=8,
-            timeout=0.5,
-            write_timeout=1.0
-        )
-    except (PermissionError, serial.serialutil.SerialException):
-        return False
+    serial_connection.baudrate = 9600
+    serial_connection.bytesize = 8
+    serial_connection.parity = serial.PARITY_NONE
+    serial_connection.stopbits = 1
+    serial_connection.timeout = 0.5
+    serial_connection.write_timeout = 1.0
 
     for i in range(4):
         try:
 
             try:
-                ser.write(bytes(str('doStop') + '\r', 'utf-8'))
+                serial_connection.write(bytes(str('doStop') + '\r', 'utf-8'))
             except (AttributeError, serial.serialutil.SerialTimeoutException):
                 raise ConnectionError('Could not write command to reflow controller.')
             response_lines = []
             command_unsuccessful = False
             while True:
-                raw_line = ser.readline().decode().strip()
+                raw_line = serial_connection.readline().decode().strip()
                 # check if the controller returns an error (# Command >[...]< not found)
                 if 'not found' in raw_line or '# Command >' in raw_line:
                     command_unsuccessful = True
@@ -52,14 +46,10 @@ def check_if_device_is_v3_pro_device(port):
             response = response_lines
             for line in response:
                 if 'Stop' in line:
-                    port_closing_thread = threading.Thread(target=ser.close, daemon=True)
-                    port_closing_thread.start()
                     return True
         except (ConnectionError, ValueError):
             pass
 
-    port_closing_thread = threading.Thread(target=ser.close, daemon=True)
-    port_closing_thread.start()
     return False
 
 
@@ -92,13 +82,13 @@ class V3Pro(Device):
     """
     number_of_v3_pro_devices = 1
 
-    def __init__(self, profile, port):
+    def __init__(self, profile, serial_connection):
         super().__init__(profile)
         self.id = "v3pro_" + str(self.__class__.number_of_v3_pro_devices)
         self.name = "V3 PRO " + str(self.__class__.number_of_v3_pro_devices)
         self.__class__.number_of_v3_pro_devices += 1
         self._run_thread_started = False
-        self._v3_pro_serial_connection = V3ProSerialConnection(port)
+        self._v3_pro_serial_connection = V3ProSerialConnection(serial_connection)
 
     def start_device(self):
         """
@@ -195,15 +185,14 @@ class V3ProSerialConnection:
         Test if the computer is connected to the correct reflow controller.
     """
 
-    def __init__(self, port=None):
+    def __init__(self, serial_connection):
         """
         Initializes all variables where the settings of the reflow controller are stored with None.
-        Additionally, a serial connection to the device is established if a port is specified when creating the object.
 
         Attributes
         ----------
-        port: str
-            The port of the reflow controller which to connect to.
+        serial_connection: serial.Serial
+            The serial connection to the reflow controller which is to be used.
         """
         self._dev_access = threading.Lock()
 
@@ -257,9 +246,7 @@ class V3ProSerialConnection:
         # number of attempts to send a command to the controller via UART
         self._number_of_trials = 5
 
-        self.ser = None
-        if port:
-            self._serial_init(port)
+        self.ser = serial_connection
 
     def __del__(self):
         if self.ser:

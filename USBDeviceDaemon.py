@@ -1,5 +1,6 @@
 import threading
 import queue
+import time
 
 from sys import platform
 if platform == 'linux':
@@ -121,6 +122,9 @@ class USBDeviceDaemon:
 
             # filter by device type "USB device"
             if new_event == 'usb_device':
+
+                # leave time for proper initialization
+                time.sleep(0.5)
 
                 # the new list of all currently connected serial devices
                 new_ports = [comport[0] for comport in serial.tools.list_ports.comports()]
