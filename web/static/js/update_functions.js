@@ -47,20 +47,34 @@ async function updateProfileList(){
     // remove all children
     div.textContent = "";
 
-    for (let i = 0; i < profiles.length; i++) {
-        let link = document.createElement("a");
-        link.textContent = profiles[i]['name'];
-        link.href = "javascript:void(0);";
-        link.setAttribute("onclick", "postProfile(" + i + ")");
-        if(profiles[i]['selected'])
-            link.style.color =  "#009374";
-        div.appendChild(link);
-    }
+    // add the "New Profile" list item
+    let row = document.createElement("div");
     let link = document.createElement("a");
     link.textContent = "New Profile";
     link.href = "javascript:void(0);";
-    link.setAttribute("onclick", "popUp(" + (profiles.length + 1) + ")");
-    div.appendChild(link);
+    link.setAttribute("onclick", "addProfile(" + (profiles.length + 1) + ")");
+    row.appendChild(link);
+    row.classList.add('first_element');
+    div.appendChild(row);
+
+    // add all profiles
+    for (let i = 0; i < profiles.length; i++) {
+        let row = document.createElement("div");
+        let link = document.createElement("a");
+        link.textContent = profiles[i]['name'];
+        link.href = "javascript:void(0);";
+        link.setAttribute("onclick", "postSelectedProfile(" + i + ")");
+        if(profiles[i]['selected']){
+        link.style.color =  "#009374";
+        }
+        let gear_icon = document.createElement("span");
+        gear_icon.classList.add('settings-icon')
+        gear_icon.setAttribute("onclick", "editProfile(" + i + ")");
+        gear_icon.innerHTML = "&#9881;"
+        row.appendChild(link);
+        row.appendChild(gear_icon);
+        div.appendChild(row);
+    }
 }
 
 /**

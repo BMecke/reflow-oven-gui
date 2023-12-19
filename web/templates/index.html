@@ -52,9 +52,9 @@
     <!-- Modal content -->
     <div id="modal_content" class="modal-content">
       <span class="close">&times;</span>
-      <h3>New Profile</h3>
-      <label for="profile_name">Name: </label>
-      <input type="text" id="profile_name" name="profile_name"><br><br>
+      <h3 id="modal_h3"></h3>
+      <label for="profile_name" class="modal_textfield_label" >Name </label>
+      <input  class="modal_textfield" type="text" id="profile_name" name="profile_name"><br><br>
       <table id="new_profile">
         <thead>
           <tr>
@@ -64,11 +64,10 @@
               <th>Power</th>
           </tr>
         </thead>
-        <tbody id="profile_points">
-        </tbody>
+        <tbody id="profile_points"></tbody>
       </table>
-      <button class="start_stop_button" id="add">Add Point</button>
-      <button text-align: center; class="start_stop_button" id="save">Save</button>
+      <button class="modal_button" id="add">Add Point</button>
+      <button class="modal_button" id="save">Save</button>
    </div>
 
   </div>

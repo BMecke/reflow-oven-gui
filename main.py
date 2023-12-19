@@ -130,7 +130,7 @@ def get_profiles():
                        for profile in profiles.profile_list])
 
 
-@app.route("/update_profile", methods=['POST'])
+@app.route("/update_selected_profile", methods=['POST'])
 def update_selected_profile():
     """
     This function is called on an HTTP POST to "/update_profile".
@@ -179,6 +179,19 @@ def new_profile():
         return json.dumps({'received': True, 'error': None})
     else:
         return json.dumps({'received': False, 'error': 'Content-Type not supported!'})    
+
+
+@app.route("/update_profile", methods=['POST'])
+def update_profile():
+    content_type = request.headers.get('Content-Type')
+    if content_type == 'application/json':
+        json_data = request.get_json()
+
+        profiles.update_profile(json_data['id'], json_data['name'], json_data['data'])
+
+        return json.dumps({'received': True, 'error': None})
+    else:
+        return json.dumps({'received': False, 'error': 'Content-Type not supported!'})
 
 
 @app.route("/update_start_stop", methods=['POST'])

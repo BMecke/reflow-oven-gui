@@ -38,6 +38,7 @@ class Profile:
 
     @property
     def data(self):
+        # ToDo: time and temperature or time, temperature and power?
         """
         A list containing the data points (time and temperature) of the profile.
         This list is sorted automatically.
@@ -55,7 +56,7 @@ class Profile:
 
         Parameters
         ----------
-        data: list
+        data_points: list
             The list containing the data points (time and temperature) of the profile.
             This list is sorted automatically.
         """

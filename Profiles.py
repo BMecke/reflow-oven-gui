@@ -88,6 +88,19 @@ class Profiles:
             self._profile_list = profile_list
             self.save_profiles()
 
+    def update_profile(self, profile_id, name, data):
+        profile_list = self.profile_list
+
+        found_profiles = [i for i in range(len(profile_list)) if profile_list[i].id == profile_id]
+
+        if len(found_profiles) > 0:
+            index = found_profiles[0]
+            profile_list[index].name = name
+            profile_list[index].data = data
+            self._profile_list = profile_list
+            self.save_profiles()
+
+
     def delete_profile(self, profile_id):
         """
         Deletes a specific profile from the profile list.

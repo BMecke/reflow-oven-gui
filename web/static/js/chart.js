@@ -16,7 +16,7 @@ function setTargetTempInChart(temperaturePoints){
     // add a Point (0, 0), if the target temperature chart doesn't start at time 0s.
     if(temperaturePoints[0][0] != 0){
         temperaturePoints = [[0, 0]].concat(temperaturePoints);
-        console.log(temperaturePoints)
+        //console.log(temperaturePoints)
     }
     chart.data.datasets[0].data = temperaturePoints;
     chart.update();
@@ -83,6 +83,7 @@ chart = new Chart(ctx, {
         display: false,
         text: 'Chart with Tick Configuration'
       }
+      // ToDo: add option to edit chart per drag and drop (https://github.com/chrispahm/chartjs-plugin-dragData)
     },
     scales: {
       x: {

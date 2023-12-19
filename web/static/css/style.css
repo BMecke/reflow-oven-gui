@@ -1,5 +1,4 @@
-/* Table for the header menu */
-
+/* ############################################Table for the header menu ########################################### */
 .header_table {
     border-collapse: collapse;
     margin: 25px 0;
@@ -14,12 +13,30 @@
 .header_table thead tr {
     background-color: #009374;
     color: #ffffff;
+}
+
+.header_table th {
+    padding: 12px 15px;
+    text-align: center;
+}
+.header_table th:last-child {
+    text-align: right;
+}
+
+.header_table th:first-child {
     text-align: left;
 }
 
-.header_table th,
 .header_table td {
     padding: 12px 15px;
+    text-align: center;
+}
+
+.header_table td:last-child {
+    text-align: right;
+}
+.header_table td:first-child {
+    text-align: left;
 }
 
 .header_table tbody tr {
@@ -39,43 +56,79 @@
     color: #009879;
 }
 
-/* Dropdown menu */
 
+/* ################################################# Dropdown menu ################################################# */
+
+/* Style for the dropdown button */
 .dropbtn {
   background-color: #009374;
   color: white;
   padding: 5px;
   font-size: 16px;
   border: none;
+  border-radius: 5px;
 }
 
+/* Style for the dropdown menu */
 .dropdown {
   position: relative;
   display: inline-block;
 }
 
+/* Style for the dropdown menu itself */
 .dropdown-content {
   display: none;
   position: absolute;
   background-color: #f1f1f1;
-  min-width: 160px;
+  min-width: 200px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
 
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
+/* Style for the individual elements in the dropdown menu */
+.dropdown-content div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.dropdown-content a:hover {background-color: #ddd;}
+/* Style for the individual elements in the dropdown menu */
+.dropdown-content a {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+  width: 125px;
+  padding: 12px 16px;
+}
 
+/* Additional style for the first element in the dropdown menu */
+.first_element {
+    border-bottom: 2px solid #009374;
+}
+
+/* Change background color on hover */
+.dropdown-content div:hover {background-color: #ddd;}
+
+/* Style for the settings gear icon */
+.settings-icon {
+  cursor: pointer;
+  padding: 12px 16px;
+}
+
+/* Change background color on hover */
+.settings-icon:hover {
+  background-color: #aaa;
+}
+
+
+/* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {display: block;}
 
+/* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #6dbfa9;}
 
+
+/* ###############################################  Start/Stop Button ############################################### */
 /* Start/Stop Button */
 .start_stop_button {
   background-color: #009374;
@@ -88,36 +141,55 @@
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
+  border-radius: 5px;
 }
 
-/* The Modal (background) */
+.start_stop_button:hover {
+    background-color: #6dbfa9;
+}
+
+
+/* ############################################  The Modal (background) ############################################ */
+
+/* Set background of modal */
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
   text-align: center;
 }
 
-/* Modal Content */
+/* Modal */
 .modal-content {
-  display: inline-block;
+  /* set position of modal */
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  /* set design */
   background-color: #fefefe;
-  margin: auto;
-  font-family: sans-serif;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 100px rgba(0, 0, 0, 0.5);
+
+  /* set text properties */
   color: #009879;
-  padding: 30px;
-  border: 1px solid #888;
   max-width: 100%;
   width: auto;
   text-align: left;
+  font-family: sans-serif;
+}
+
+.modal-content h3 {
+    font-size: 30px;
 }
 
 /* The Close Button */
@@ -133,4 +205,57 @@
   color: #000;
   text-decoration: none;
   cursor: pointer;
+}
+
+.modal_button{
+  background-color: #009374;
+  border: none;
+  color: white;
+  padding: 5px;
+  text-align: center;
+  font-size: 16px;
+  margin-top: 15px;
+  margin-right: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.modal_delete_button {
+  background-color: #ff0000;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 10 px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.modal_button:hover {
+    background-color: #6dbfa9;
+}
+
+.modal_textfield {
+      flex: 1;
+      width: 125px;
+      padding: 8px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 0 4px 4px 0;
+}
+
+.modal_textfield_label {
+      color: #fff;
+      background-color: #009374;
+      padding: 8px;
+      border-radius: 4px 0 0 4px;
+       border: 1px solid #009374;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+  filter: invert(100%); /* Invertiere die Farben, um sie weiß zu machen */
 }
