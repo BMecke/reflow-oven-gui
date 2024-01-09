@@ -30,13 +30,15 @@ async function updateDeviceList(){
     div.textContent = "";
 
     for (let i = 0; i < devices.length; i++) {
+        let row = document.createElement("div");
         let link = document.createElement("a");
         link.textContent = devices[i]["name"];
         link.href = "javascript:void(0);";
         link.setAttribute("onclick", "postDevice(" + i + ")");
         if(devices[i]['selected'])
             link.style.color =  "#009374";
-        div.appendChild(link);
+        row.appendChild(link);
+        div.appendChild(row);
     }
 }
 

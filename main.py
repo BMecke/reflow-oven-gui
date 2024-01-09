@@ -183,6 +183,18 @@ def new_profile():
 
 @app.route("/update_profile", methods=['POST'])
 def update_profile():
+    """
+    This function is called on an HTTP POST to "/update_profile".
+    This function is called from the frontend to update a selected profile.
+    The profile to update is passed to the function from the frontend.
+
+    The return corresponds to the HTTP response.
+
+    Returns
+    -------
+        str
+            A json string indicating whether all data was received correctly.
+    """
     content_type = request.headers.get('Content-Type')
     if content_type == 'application/json':
         json_data = request.get_json()
