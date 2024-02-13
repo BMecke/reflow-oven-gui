@@ -42,7 +42,7 @@ class Profiles:
            A list containing all soldering profiles.
         """
         if not self._profiles_loaded:
-            input_file = open(os.path.join('storage', 'profiles.json'))
+            input_file = open(os.path.join('src', 'storage', 'profiles.json'))
             profiles = json.load(input_file)
 
             for profile in profiles:
