@@ -99,7 +99,7 @@ class USBDeviceDaemon:
 
     def _device_initialization_complete(self):
         """
-        When called for the first time, this function invokes a callback funtion.
+        When called for the first time, this function invokes a callback function.
 
         The invoked callback function will assume that the USBDeviceDaemon has been fully initialized
         and all serial devices that were connected via USB during the initialization have been processed.
