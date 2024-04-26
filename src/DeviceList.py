@@ -4,8 +4,8 @@ import serial
 
 from USBDeviceDaemon import USBDeviceDaemon
 
-from src.devices.Simulator import Simulator
-from src.devices.V3_Pro import V3Pro, check_if_device_is_v3_pro_device
+from devices.Simulator import Simulator
+from devices.V3_Pro import V3Pro, check_if_device_is_v3_pro_device
 
 
 class DeviceList:

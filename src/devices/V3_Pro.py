@@ -514,7 +514,7 @@ class V3ProSerialConnection:
                         return self._memory_slot
                     else:
                         raise ValueError
-                except (ConnectionError, ValueError):
+                except (ConnectionError, ValueError, IndexError):
                     if i == self._number_of_trials - 1:
                         raise ConnectionError('Could not read memory slot')
 
@@ -537,7 +537,7 @@ class V3ProSerialConnection:
                         break
                     else:
                         raise ValueError
-                except (ConnectionError, ValueError):
+                except (ConnectionError, ValueError, IndexError):
                     if i == self._number_of_trials - 1:
                         raise ConnectionError('Could not write memory slot.')
 
@@ -555,7 +555,7 @@ class V3ProSerialConnection:
                     return self._temp_unit
                 else:
                     raise ValueError
-            except (ConnectionError, ValueError):
+            except (ConnectionError, ValueError, IndexError):
                 if i == self._number_of_trials - 1:
                     raise ConnectionError('Could not read temperature unit.')
 
@@ -573,7 +573,7 @@ class V3ProSerialConnection:
                         break
                     else:
                         raise ValueError
-                except (ConnectionError, ValueError):
+                except (ConnectionError, ValueError, IndexError):
                     if i == self._number_of_trials - 1:
                         raise ConnectionError('Could not write temperature unit.')
 
@@ -591,7 +591,7 @@ class V3ProSerialConnection:
                     return self._trace
                 else:
                     raise ValueError
-            except (ConnectionError, ValueError):
+            except (ConnectionError, ValueError, IndexError):
                 if i == self._number_of_trials - 1:
                     raise ConnectionError('Could not read trace setting.')
 
@@ -623,7 +623,7 @@ class V3ProSerialConnection:
                         break
                     else:
                         raise ValueError
-                except (ConnectionError, ValueError):
+                except (ConnectionError, ValueError, IndexError):
                     if i == self._number_of_trials - 1:
                         raise ConnectionError('Could not write trace setting.')
 
@@ -691,7 +691,7 @@ class V3ProSerialConnection:
                     return self._debug
                 else:
                     raise ValueError
-            except (ConnectionError, ValueError):
+            except (ConnectionError, ValueError, IndexError):
                 if i == self._number_of_trials - 1:
                     raise ConnectionError('Could not read temptrace setting.')
 
@@ -723,7 +723,7 @@ class V3ProSerialConnection:
                         break
                     else:
                         raise ValueError
-                except (ConnectionError, ValueError):
+                except (ConnectionError, ValueError, IndexError):
                     if i == self._number_of_trials - 1:
                         raise ConnectionError('Could not write debug setting.')
 
@@ -742,7 +742,7 @@ class V3ProSerialConnection:
                         return self._background_light
                     else:
                         raise ValueError
-                except (ConnectionError, ValueError):
+                except (ConnectionError, ValueError, IndexError):
                     if i == self._number_of_trials - 1:
                         raise ConnectionError('Could not read background light brightness.')
 
@@ -765,7 +765,7 @@ class V3ProSerialConnection:
                         break
                     else:
                         raise ValueError
-                except (ConnectionError, ValueError):
+                except (ConnectionError, ValueError, IndexError):
                     if i == self._number_of_trials - 1:
                         raise ConnectionError('Could not write background light brightness.')
 
