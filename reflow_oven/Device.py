@@ -6,6 +6,7 @@ logger = logging.getLogger('Device')
 logging.basicConfig(format='%(levelname)s - %(name)s | %(asctime)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S', level=logging.INFO)
 
+
 class Device:
     """
     In this class the different soldering devices are managed.

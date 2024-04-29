@@ -2,7 +2,7 @@ import logging
 import time
 import random
 
-from src.Device import Device
+from reflow_oven.Device import Device
 
 logger = logging.getLogger('Simulator')
 logging.basicConfig(format='%(levelname)s - %(name)s | %(asctime)s - %(message)s',

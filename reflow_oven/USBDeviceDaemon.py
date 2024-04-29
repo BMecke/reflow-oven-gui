@@ -13,24 +13,34 @@ import serial.tools.list_ports
 
 
 class USBDeviceDaemon:
-    # TODO: Adjust docstring format according to project standard
+    """
+    Monitors USB ports for devices being plugged in and out.
+    Whenever such a USB event occurs, the list of currently connected serial devices is updated.
+    """
     def __init__(self, plug_in_event, plug_out_event, init_complete):
         """
         Monitors USB ports for devices being plugged in and out.
         Whenever such a USB event occurs, the list of currently connected serial devices is updated.
 
-        :param plug_in_event: The function to call when serial devices have been plugged in to USB.
+        Parameters
+        ----------
+        plug_in_event: function
+            The function to call when serial devices have been plugged in to USB.
             Receives the corresponding port names as a list.
-        :type plug_in_event: function
-        :param plug_out_event: The function to call when serial devices have been plugged out from USB.
+
+        plug_out_event: function
+            The function to call when serial devices have been plugged out from USB.
             Receives the corresponding port names as a list.
-        :type plug_out_event: function
-        :param init_complete: The function to call after the USBDeviceDaemon has been fully initialized
+
+        init_complete: function
+            The function to call after the USBDeviceDaemon has been fully initialized
             and all serial devices that were connected via USB during the initialization have been processed.
             This function is only called once.
-        :type init_complete: function
-        :return: A USBDeviceDaemon object.
-        :rtype: USBDeviceDaemon
+
+        Returns
+        -------
+        USBDeviceDaemon
+            A USBDeviceDaemon object.
         """
         # the callback functions invoked when serial devices are inserted/removed via USB
         self._add_event = plug_in_event
@@ -71,12 +81,15 @@ class USBDeviceDaemon:
         """
         Enqueues an event into the USB event queue.
 
-        :param action: The kind of event that occurred.
+        Parameters
+        ----------
+        action: str
+            The kind of event that occurred.
             Examples are "bind", "unbind", etc.
-        :type action: str
-        :param device: The device object that the action was performed on.
+
+        device: pyudev.Device
+            The device object that the action was performed on.
             Provides several properties to access device information such as its vendor, USB path, etc.
-        :type device: pyudev.Device
         """
         self._event_queue.put(item=device.properties['DEVTYPE'], block=False)
 
