@@ -42,7 +42,12 @@ class Profiles:
            A list containing all soldering profiles.
         """
         if not self._profiles_loaded:
-            input_file = open(os.path.join('storage', 'profiles.json'))
+            if os.path.exists(os.path.join('src', 'storage')):
+                base_dir = os.path.join('src', 'storage')
+            else:
+                base_dir = 'storage'
+
+            input_file = open(os.path.join(base_dir, 'profiles.json'))
             profiles = json.load(input_file)
 
             for profile in profiles:
@@ -57,10 +62,15 @@ class Profiles:
         """
         Saves the current profile list in "storage/profiles.json".
         """
+        if os.path.exists(os.path.join('src', 'storage')):
+            base_dir = os.path.join('src', 'storage')
+        else:
+            base_dir = 'storage'
+
         profiles = []
         for profile in self.profile_list:
             profiles.append({'id': profile.id, 'name': profile.name, 'data': profile.data})
-        with open(os.path.join('storage', 'profiles.json'), 'w') as output_file:
+        with open(os.path.join(base_dir, 'profiles.json'), 'w') as output_file:
             json.dump(profiles, output_file)
 
     def add_profile(self, profile_id, name, data):
@@ -100,7 +110,6 @@ class Profiles:
             self._profile_list = profile_list
             self.save_profiles()
 
-
     def delete_profile(self, profile_id):
         """
         Deletes a specific profile from the profile list.
@@ -136,4 +145,3 @@ class Profiles:
         new_selected_profile = next((profile for profile in self.profile_list if profile.id == profile_id), None)
         if new_selected_profile:
             new_selected_profile.selected = True
-

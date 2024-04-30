@@ -203,4 +203,3 @@ class Device:
             The profile to be set.
         """
         raise NotImplementedError
-

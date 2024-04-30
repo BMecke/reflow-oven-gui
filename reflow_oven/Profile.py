@@ -1,4 +1,3 @@
-import json
 import logging
 
 logger = logging.getLogger('Profile')
@@ -121,4 +120,3 @@ class Profile:
                     prev_point = self.data[i - 1]
                     next_point = self.data[i]
                     return prev_point, next_point
-

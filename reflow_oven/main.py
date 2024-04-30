@@ -1,6 +1,8 @@
 import json
+import os
+import sys
 
-from flask import Flask, request, jsonify
+from flask import Flask, request
 from flask import render_template
 
 # disable logging
@@ -14,11 +16,14 @@ logging.getLogger("werkzeug").disabled = True
 profiles = Profiles()
 device_list = DeviceList(profiles)
 
-# creates a Flask application, named app
+base_dir = '.'
+if hasattr(sys, '_MEIPASS'):
+    base_dir = str(os.path.join(sys._MEIPASS))
+
 app = Flask(__name__,
             static_url_path='/static',
-            static_folder='web/static',
-            template_folder='web/templates')
+            static_folder=str(os.path.join(base_dir, 'web', 'static')),
+            template_folder=str(os.path.join(base_dir, 'web', 'templates')))
 
 
 @app.route("/")
@@ -155,7 +160,7 @@ def update_selected_profile():
         return json.dumps({'received': True, 'error': None})
     else:
         return json.dumps({'received': False, 'error': 'Content-Type not supported!'})
-    
+
 
 @app.route("/new_profile", methods=['POST'])
 def new_profile():
@@ -178,7 +183,7 @@ def new_profile():
 
         return json.dumps({'received': True, 'error': None})
     else:
-        return json.dumps({'received': False, 'error': 'Content-Type not supported!'})    
+        return json.dumps({'received': False, 'error': 'Content-Type not supported!'})
 
 
 @app.route("/update_profile", methods=['POST'])
@@ -281,5 +286,3 @@ def get_measured_temp_point():
 # run the application
 if __name__ == "__main__":
     app.run(debug=False)
-
-
