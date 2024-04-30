@@ -8,7 +8,7 @@ def check_working_directory():
         return False
     if not os.path.isfile('build.py'):
         return False
-    if not os.path.isfile(os.path.join('src', 'main.py')):
+    if not os.path.isfile(os.path.join('reflow_oven', 'main.py')):
         return False
     return True
 
@@ -24,13 +24,13 @@ def clear_app():
 
 def create_app():
     subprocess.run(
-        ['pyinstaller', 'src/main.py',
+        ['pyinstaller', 'reflow_oven/main.py',
          '-F',
-         '-p', 'src/',
-         '--add-data', 'src/web/templates:web/templates',
-         '--add-data', 'src/web/static:web/static']
+         '-p', 'reflow_oven/',
+         '--add-data', 'reflow_oven/web/templates:web/templates',
+         '--add-data', 'reflow_oven/web/static:web/static']
     )
-    shutil.copytree(os.path.join('src', 'storage'), os.path.join('dist', 'storage'))
+    shutil.copytree(os.path.join('reflow_oven', 'storage'), os.path.join('dist', 'storage'))
 
 
 if __name__ == "__main__":
