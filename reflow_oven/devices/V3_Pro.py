@@ -6,7 +6,7 @@ import time
 import serial
 import os
 
-from reflow_oven.Device import Device
+from Device import Device
 
 logger = logging.getLogger('V3_PRO')
 logging.basicConfig(format='%(levelname)s - %(name)s | %(asctime)s - %(message)s',

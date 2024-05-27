@@ -2,11 +2,12 @@ import logging
 import time
 import random
 
-from reflow_oven.Device import Device
+from Device import Device
 
 logger = logging.getLogger('Simulator')
 logging.basicConfig(format='%(levelname)s - %(name)s | %(asctime)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S', level=logging.INFO)
+
 
 class Simulator(Device):
     """

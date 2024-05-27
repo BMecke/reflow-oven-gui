@@ -42,8 +42,8 @@ class Profiles:
            A list containing all soldering profiles.
         """
         if not self._profiles_loaded:
-            if os.path.exists(os.path.join('src', 'storage')):
-                base_dir = os.path.join('src', 'storage')
+            if os.path.exists(os.path.join('reflow_oven', 'storage')):
+                base_dir = os.path.join('reflow_oven', 'storage')
             else:
                 base_dir = 'storage'
 
@@ -62,8 +62,8 @@ class Profiles:
         """
         Saves the current profile list in "storage/profiles.json".
         """
-        if os.path.exists(os.path.join('src', 'storage')):
-            base_dir = os.path.join('src', 'storage')
+        if os.path.exists(os.path.join('reflow_oven', 'storage')):
+            base_dir = os.path.join('reflow_oven', 'storage')
         else:
             base_dir = 'storage'
 
