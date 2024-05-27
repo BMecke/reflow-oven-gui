@@ -14,8 +14,20 @@ logging.basicConfig(format='%(levelname)s - %(name)s | %(asctime)s - %(message)s
 
 
 def check_if_device_is_v3_pro_device(serial_connection):
-    # TODO: Prettify entire function
-    # TODO: Add docstring
+    """
+    Returns, whether the specified serial connection is a connection to a V3Pro device.
+
+    Parameters
+    ----------
+    serial_connection: serial.Serial
+        The serial connection to check.
+
+    Returns
+    -------
+    bool
+        True if V3Pro device, False otherwise.
+    """
+    # TODO: Prettify this function
     serial_connection.baudrate = 9600
     serial_connection.bytesize = 8
     serial_connection.parity = serial.PARITY_NONE

@@ -45,7 +45,15 @@ class DeviceList:
 
     def _on_added_devices(self, port_list):
         """
-        TODO: Add docstring
+        Opens a serial connection to each newly connected device and
+        creates matching objects inheriting from the Device class.
+        For each new device, both the serial port and the corresponding object
+        are added to the internal hardware device list.
+
+        Parameters
+        ----------
+        port_list: list[str]
+            The list of serial ports to which new devices have just been connected.
         """
         for port in port_list:
 
@@ -65,7 +73,12 @@ class DeviceList:
 
     def _on_removed_devices(self, port_list):
         """
-        TODO: Add docstring
+        Updates the internal hardware device list incase any devices are disconnected.
+
+        Parameters
+        ----------
+        port_list: list[str]
+            The list of serial ports from which previously connected devices have just been removed.
         """
         for port in port_list:
             for device in self._hardware_device_list:
