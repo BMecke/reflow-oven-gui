@@ -4,6 +4,14 @@ import shutil
 
 
 def check_working_directory():
+    """
+    Returns, whether the current working directory is equal to the repository root.
+
+    Returns
+    -------
+    bool
+        True if working directory is "reflow-oven-gui", False otherwise.
+    """
     if os.path.basename(os.getcwd()) != 'reflow-oven-gui':
         return False
     if not os.path.isfile('build.py'):
@@ -14,6 +22,10 @@ def check_working_directory():
 
 
 def clear_app():
+    """
+    Deletes any currently present "pyinstaller" artifact-directories.
+    This includes "build" as well as "dist".
+    """
     build_dir = 'build'
     dist_dir = 'dist'
     if os.path.isdir(build_dir):
@@ -23,6 +35,10 @@ def clear_app():
 
 
 def create_app():
+    """
+    Invokes "pyinstaller" to create a standalone executable version of this Python project.
+    Target directory for the result is "dist".
+    """
     subprocess.run(
         ['pyinstaller', 'reflow_oven/main.py',
          '-F',
