@@ -1,6 +1,9 @@
 import json
 import os
 import sys
+import time
+import webbrowser
+import threading
 
 from flask import Flask, request
 from flask import render_template
@@ -283,6 +286,13 @@ def get_measured_temp_point():
     return json.dumps([device_list.selected_device.runtime, device_list.selected_device.temperature])
 
 
+def open_website(url, delay):
+    time.sleep(delay)
+    webbrowser.open(url=url, new=2)
+
+
 # run the application
 if __name__ == "__main__":
+    thread = threading.Thread(target=open_website, args=("http://127.0.0.1:5000", 1), daemon=True)
+    thread.start()
     app.run(debug=False)
