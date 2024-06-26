@@ -6,8 +6,20 @@ async function addProfile(index){
 }
 
 async function editProfile(index){
-    profile = profileList[index]
+    profile = profileList[index];
     popUp(index, profile);
+    selectedProfileIndex = index;
+}
+
+async function deleteProfile(){
+    profile = profileList[selectedProfileIndex];
+
+    postDeletedProfile(profile["id"]);
+
+    let modal = document.getElementById("profile_modal");
+    modal.style.display = "none";
+
+    updateProfileList();
 }
 
 async function popUp(index, profile){

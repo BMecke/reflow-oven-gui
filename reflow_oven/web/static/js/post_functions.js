@@ -35,3 +35,8 @@ function postUpdatedProfile(id, name, data){
     postJSON("/update_profile", {id, name, data});
     //console.log(JSON.stringify({id, name, data}));
 }
+
+function postDeletedProfile(id){
+    postJSON("/delete_profile", {id});
+    //console.log(JSON.stringify({id, name, data}));
+}

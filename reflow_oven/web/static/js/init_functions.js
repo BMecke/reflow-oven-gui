@@ -4,6 +4,7 @@ var deviceRunning = false;
 var deviceRunOut = false;
 var chartLength = 0;
 var lastUpdatedPoint = [-1, -1];
+var selectedProfileIndex = 0;
 
 
 function update(){

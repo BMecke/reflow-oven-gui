@@ -151,6 +151,12 @@
 
 /* ############################################  The Modal (background) ############################################ */
 
+#modal_header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
 /* Set background of modal */
 .modal {
   display: none; /* Hidden by default */

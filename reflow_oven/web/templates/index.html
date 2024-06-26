@@ -53,8 +53,17 @@
     <div id="modal_content" class="modal-content">
       <span class="close">&times;</span>
       <h3 id="modal_h3"></h3>
-      <label for="profile_name" class="modal_textfield_label" >Name </label>
-      <input  class="modal_textfield" type="text" id="profile_name" name="profile_name"><br><br>
+      <div id="modal_header">
+        <div>
+          <label for="profile_name" class="modal_textfield_label">Name</label>
+          <input  class="modal_textfield" type="text" id="profile_name" name="profile_name">
+        </div>
+
+        <button class="modal_delete_button" id="delete_profile" align="right" onclick="deleteProfile();"><img class="icon" src="/static/icons/delete.svg"> Delete Profile</button>
+      </div>
+
+
+      <br><br>
       <table id="new_profile">
         <thead>
           <tr>
